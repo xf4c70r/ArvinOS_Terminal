@@ -11,7 +11,7 @@ function About(){
 
     return(
         <div className='gap-20 justify-center items-center py-24 px-16 space-y-4' id='About'>
-            <h2 className="text-3xl font-bold text-stone-900 mb-6">About Me</h2>
+            <h2 className="text-3xl text-center font-bold text-stone-900 mb-6">About Me</h2>
             <p className="text-stone-500">
                 I recently completed my Masters in Computer Science at UC Davis. I'm a software engineer with a focus on building and shipping full stack AI integrated applications.
             </p>
