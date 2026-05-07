@@ -1,4 +1,5 @@
 import { useState } from "react"
+import runCommand from "./commands"
 
 function Terminal(){
 
@@ -25,7 +26,7 @@ function Terminal(){
                         onChange={(e) => setInput(e.target.value)}
                         onKeyDown={(e) => {
                             if (e.key === "Enter") {
-                                const newEntry = { command: input, output: "Command output" }
+                                const newEntry = { command: input, output: runCommand(input) }
                                 setHistory([...history, newEntry])
                                 setInput("")
                             }
