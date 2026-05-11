@@ -13,7 +13,7 @@ const commands = {
 
   EXPERIENCE
   ──────────
-  ls experience/            list all experience
+  ls experience/         list all experience
   cat experience/aseec.txt  ASEEC role
   cat experience/aiea.txt   AIEA role
   cat experience/ucds.txt   UCD role
@@ -21,7 +21,7 @@ const commands = {
 
   PROJECTS
   ────────
-  ls projects/                 list all projects
+  ls projects/              list all projects
   cat projects/gameboi.txt     GameBoi
   cat projects/stocksense.txt  StockSense
   cat projects/blockchain.txt  Blockchain
