@@ -310,22 +310,91 @@ Paper:   https://ieeexplore.ieee.org/abstract/document/11189130
     },
 
     ls: () =>
-`./
-├── experience/
-├── projects/
-├── publications/
-├── education.txt
-└── skills.json
-`,
+      `./
+      ├── experience/
+      ├── projects/
+      ├── publications/
+      ├── education.txt
+      └── skills.json
+      `,
 
     'ls /': () =>
-`/
-├── experience/
-├── projects/
-├── publications/
-├── education.txt
-└── skills.json
-`,
+      `/
+      ├── experience/
+      ├── projects/
+      ├── publications/
+      ├── education.txt
+      └── skills.json
+      `,
+
+    neofetch: async () => {
+
+      // OS: ArvinOS — updates every year
+      const birthYear = 2001; 
+      const age = new Date().getFullYear() - birthYear;
+
+      // Uptime: time since page load
+      const uptimeSeconds = Math.floor(performance.now() / 1000);
+      const uptimeH = Math.floor(uptimeSeconds / 3600);
+      const uptimeM = Math.floor((uptimeSeconds % 3600) / 60);
+      const uptimeS = uptimeSeconds % 60;
+      const uptime = `${uptimeH}h ${uptimeM}m ${uptimeS}s`;
+
+      // Resolution
+      const res = `${window.screen.width}x${window.screen.height}`;
+
+      // Memory (Chrome/Edge only, graceful fallback)
+      let memory = 'N/A';
+      if (performance.memory) {
+          const used = (performance.memory.usedJSHeapSize / 1073741824).toFixed(2);
+          const total = (performance.memory.jsHeapSizeLimit / 1073741824).toFixed(2);
+          memory = `${used} GiB / ${total} GiB`;
+      }
+
+      const art = `
+      /^\\/^\\
+    _|__|  O|
+  \\/     /~  \\_
+  \\____|__________/  \\
+          \\_______      \\
+                  \`\\     \\
+                    |     |
+                  /      /
+                  /     /
+                /      /
+              /     /
+            /     /
+            /     /
+          (      (
+            \\      ~-____-~
+              ~-___-~
+  `;
+
+      const info = [
+          `arvind@portfolio`,
+          `─────────────────────`,
+          `OS:         ArvinOS ${age}.0 (Rolling Release)`,
+          `Host:       San Francisco, CA`,
+          `Kernel:     curiosity-${age}.04.1`,
+          `Uptime:     ${uptime}`,
+          `Packages:   python, flask, django, react, docker, aws, gcp, pyTorch, langchain,`,
+          `Shell:      python3 3.12.0`,
+          `Resolution: ${res}`,
+          `Terminal:   xf4c70r-term`,
+          `Memory:     ${memory}`,
+      ];
+
+      const artLines = art.split('\n');
+      const maxArt = Math.max(...artLines.map(l => l.length));
+      const combined = artLines.map((line, i) => {
+          const padded = line.padEnd(maxArt);
+          return i < info.length
+              ? `${padded}   ${info[i]}`
+              : padded;
+      });
+
+      return combined.join('\n');
+  },
 };
 
 function runCommand(command){
