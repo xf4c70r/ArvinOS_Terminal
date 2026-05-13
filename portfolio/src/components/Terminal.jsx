@@ -1,10 +1,17 @@
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import runCommand from "./commands"
 
 function Terminal(){
 
     const [history, setHistory] = useState([])
     const [input, setInput] = useState("")
+    const outputRef = useRef(null)
+
+    useEffect(() => {
+        if (outputRef.current) {
+            outputRef.current.scrollTop = outputRef.current.scrollHeight
+        }
+    }, [history])
 
     return (
         <div className="h-screen bg-[#0d1117] p-2">
@@ -21,7 +28,7 @@ function Terminal(){
             </div>
 
             {/* Output Area */}
-            <div className="overflow-y-auto text-[#cdd9e5] text-sm leading-7">
+            <div ref={outputRef} className="overflow-y-auto text-[#cdd9e5] text-sm leading-7">
                 {history.map((entry, index) => (
                     <div key={index}>
                         <p className="text-[#57ab5a]">arvind@portfolio ~ % <span className="text-[#cdd9e5]">{entry.command}</span></p>
