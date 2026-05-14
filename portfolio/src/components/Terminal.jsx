@@ -1,11 +1,13 @@
 import { useState, useEffect, useRef } from "react"
-import runCommand from "./commands"
+import {runCommand, commands} from "./commands"
 
 function Terminal(){
 
     const [history, setHistory] = useState([])
     const [input, setInput] = useState("")
     const outputRef = useRef(null)
+    const [historyIndex, setHistoryIndex] = useState(-1)
+    const [searchMatches, setSearchMatches] = useState([])
 
     useEffect(() => {
         if (outputRef.current) {
@@ -37,14 +39,54 @@ function Terminal(){
                 ))}
             </div>
 
+            {searchMatches.length > 1 && (
+            <div className="px-4 text-[#768390] text-sm">
+                {searchMatches.join("  ")}
+            </div>
+            )}
+
             {/* Input Line */}
             <div className="px-4 pb-4 flex items-center gap-2">
                 <span className="text-[#57ab5a] text-sm">arvind@portfolio ~ %</span>
                 <input
                     type="text"
                     value={input}
-                    onChange={(e) => setInput(e.target.value)}
+                    onChange={(e) => {
+                        setInput(e.target.value)
+                        setSearchMatches([])
+                    }}
                     onKeyDown={(e) => {
+                        if (e.key === "ArrowDown"){
+                            if (history.length === 0) return
+                            if (historyIndex === -1) {
+                                setHistoryIndex(0)
+                                setInput(history[0].command)
+                            } else if (historyIndex < history.length - 1) {
+                                setHistoryIndex(historyIndex + 1)
+                                setInput(history[historyIndex + 1].command)
+                            }
+                        }
+                        if (e.key === "ArrowUp"){
+                            if (history.length === 0) return
+                            if (historyIndex > 0) {
+                                setHistoryIndex(historyIndex - 1)
+                                setInput(history[historyIndex - 1].command)
+                            } else {
+                                setHistoryIndex(-1)
+                                setInput("")
+                            }
+                        }
+                        if (e.key === "Tab"){
+                            e.preventDefault()
+                            const commands_list = Object.keys(commands).map(cmd => cmd.toLowerCase())
+                            const matches = commands_list.filter(cmd => cmd.startsWith(input.toLowerCase()))
+                            if (matches.length === 1) {
+                                setInput(matches[0] + " ")
+                            } else if (matches.length > 1) {
+                                setSearchMatches(matches)
+                            }
+                        }
+
                         if (e.key === "Enter") {
                             if (input.trim().toLowerCase() === "clear" || input.trim().toLowerCase() === "cls") {
                                 setHistory([])
