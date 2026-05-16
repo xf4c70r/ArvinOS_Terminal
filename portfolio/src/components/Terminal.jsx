@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react"
-import {runCommand, commands} from "./commands"
+import runCommand, { commands } from "./commands"
 
 function Terminal(){
 
