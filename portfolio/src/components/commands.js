@@ -407,4 +407,5 @@ function runCommand(command){
     return `Command not found: ${command}, ${commands.help()}`
 }
 
-export default {commands, runCommand}
+export { commands }
+export default runCommand
